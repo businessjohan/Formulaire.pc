@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Accès au formulaire</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 80px; background-color: #f4f4f9; padding: 20px; }
+        .info-card { background: white; padding: 30px; border-radius: 8px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.1); max-width: 450px; width: 100%; box-sizing: border-box; }
+        h1 { color: #1a73e8; font-size: 24px; margin-bottom: 20px; }
+        p { color: #333; font-size: 16px; line-height: 1.6; }
+        .btn-copy { background-color: #1a73e8; color: white; border: none; padding: 12px 20px; font-size: 15px; border-radius: 5px; cursor: pointer; margin-top: 15px; font-weight: bold; width: 100%; }
+        .btn-copy:active { background-color: #0d47a1; }
+    </style>
+</head>
+<body>
+
+    <!-- Message affiché uniquement sur Smartphone / Tablette -->
+    <div id="mobile-message" style="display: none;">
+        <div class="info-card">
+            <h1>Formulaire réservé aux ordinateurs</h1>
+            <p>Pour garantir la bonne saisie de vos données, ce formulaire ne peut pas être rempli sur un téléphone.</p>
+            <p><strong>Veuillez envoyer ce lien sur un PC ou un Mac pour pouvoir y accéder.</strong></p>
+            
+            <!-- Bouton pratique pour copier le lien et se l'envoyer par message/mail -->
+            <button class="btn-copy" onclick="copierLien()">Copier le lien pour l'envoyer sur mon PC</button>
+        </div>
+    </div>
+
+    <!-- Message de transition pendant la vérification de l'appareil -->
+    <div id="loading-message">
+        <p>Vérification de votre appareil en cours...</p>
+    </div>
+
+    <script>
+        // Détection des appareils mobiles
+        var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+        if (isMobile) {
+            // Si c'est un mobile, on masque le chargement et on montre les instructions
+            document.getElementById('loading-message').style.display = 'none';
+            document.getElementById('mobile-message').style.display = 'block';
+        } else {
+            // Si c'est un PC, redirection immédiate vers le Google Forms
+            window.location.href = "https://google.com";
+        }
+
+        // Fonction pour copier automatiquement le lien en cours
+        function copierLien() {
+            navigator.clipboard.writeText(window.location.href).then(function() {
+                alert("Lien copié ! Vous pouvez maintenant vous l'envoyer par message ou par mail pour l'ouvrir sur votre ordinateur.");
+            }).catch(function() {
+                alert("Impossible de copier automatiquement. Veuillez copier le lien dans votre barre d'adresse.");
+            });
+        }
+    </script>
+</body>
+</html>
